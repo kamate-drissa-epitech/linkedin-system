@@ -1,11 +1,13 @@
 package com.linkedin.usersservice.controller;
 
 import com.linkedin.usersservice.dto.UserResponse;
+import com.linkedin.usersservice.entity.User;
 import com.linkedin.usersservice.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -46,14 +48,27 @@ public class UserController {
         return ResponseEntity.ok(userService.updateUserProfile(userId, request));
     }
 
-    // PENDING ENDPOINT
+    @PostMapping("/{userId/profile-photo")
+    public ResponseEntity<UserResponse> uploadProfilePhoto(
+            @PathVariable User userId,
+            @RequestHeader("X-User-Id") String requestingUserId,
+            @RequestParam("file")MultipartFile file
+            ){
+
+            if (!userId.equals(requestingUserId)) {
+                return ResponseEntity.status(403).build();
+            }
+
+            ResponseEntity.ok(userService.updateUserProfile(userId, file));
+    }
 
     /**
      * Send connection request to one user
-     * @param target
+     * @param targetedUserId
      * @param requestingUserId
      * @return
      */
+    @PostMapping("/{targetedUserId/connect}")
     public ResponseEntity<String> sendConnection(@PathVariable String targetedUserId, @RequestHeader("X-User-Id") String requestingUserId) {
         return ResponseEntity.ok(userService.sendConnectionRequest(targetedUserId, requestingUserId));
     }
