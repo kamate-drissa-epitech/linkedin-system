@@ -52,7 +52,7 @@ public class PostService {
 
         if (image != null && !image.isEmpty()){
             String imageUrl = s3Service.uploadFile(
-                    image, "posts/",authorId
+                    image, "posts/" + authorId
             );
             post.setImageUrl(imageUrl);
         }
