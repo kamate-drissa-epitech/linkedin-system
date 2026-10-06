@@ -35,7 +35,7 @@ public class PostController {
 
 
     @GetMapping("/postId")
-    public ResponseEntity<Post> getPost(@PathVariable String PostId) {
+    public ResponseEntity<Post> getPost(@PathVariable String postId) {
         return ResponseEntity.ok(postService.getPost(postId));
     }
 
@@ -52,6 +52,7 @@ public class PostController {
     }
 
 
+    @PostMapping("/{postId}/comments")
     public ResponseEntity<Comment> addComment(
             @PathVariable String postId,
             @RequestParam String authorId,
@@ -59,6 +60,20 @@ public class PostController {
     ) {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(postService.addComment(postId, authorId, content));
+    }
+
+
+    @PostMapping("/{postId}")
+    public  ResponseEntity<String> deletePost(@PathVariable String postId, @RequestParam String userId) {
+        postService.deletePost(postId, userId);
+
+        return ResponseEntity.ok("Post deleted");
+    }
+
+
+    @GetMapping("/{postId}/comments")
+    public ResponseEntity<List<Comment>> getComments(@PathVariable String postId) {
+        return ResponseEntity.ok(postService.getComments(postId));
     }
 
 
