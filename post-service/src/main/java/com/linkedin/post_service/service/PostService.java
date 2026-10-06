@@ -63,7 +63,7 @@ public class PostService {
         // Publish to kafka so feed and search consumme
         Map<String,Object> postCreatedEvent = new HashMap<>();
         postCreatedEvent.put("postId",savedPost.getId());
-        postCreatedEvent.put("postAuthorId",savedPost.getAuthorId());
+        postCreatedEvent.put("authorId",savedPost.getAuthorId());
         postCreatedEvent.put("postContent",savedPost.getContent());
         postCreatedEvent.put("postImageUrl",savedPost.getImageUrl());
         postCreatedEvent.put("createAt",savedPost.getCreatedAt().toString());

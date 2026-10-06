@@ -79,7 +79,7 @@ public class UserController {
         return  ResponseEntity.ok(userService.acceptConnectionRequest(connectionId));
     }
 
-    @GetMapping("/{userId}/getConnections")
+    @GetMapping("/{userId}/connections")
     public ResponseEntity<List<UserResponse>> getConnections(@PathVariable String userId, @RequestHeader("X-User-Id") String requestingUserId) {
         return  ResponseEntity.ok(userService.getConnections(userId));
     }
