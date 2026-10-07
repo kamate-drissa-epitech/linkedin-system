@@ -83,8 +83,8 @@ public class UserService {
        List<Connection> connections =  connectionRepository.findByRequesterIdAndStatus(userId, ConnectionStatus.CONNECTED);
 
        return connections.stream()
-               .map(Connection c -> getUserProfile(c.getReceiverId))
-               .collect(Collectors.toSet());
+               .map((Connection c) -> getUserProfile(c.getReceiverId()))
+               .collect(Collectors.toList());
     }
 
 

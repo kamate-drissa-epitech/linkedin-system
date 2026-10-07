@@ -136,7 +136,7 @@ public class PostService {
         Post post = getPost(postId);
 
         Comment comment = new Comment();
-        comment.setPostId(postId));
+        comment.setPostId(postId);
         comment.setAuthorId(authorId);
         comment.setContent(content);
         Comment savedComment = commentRepository.save(comment);
