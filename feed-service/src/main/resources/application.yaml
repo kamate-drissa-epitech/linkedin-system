@@ -26,15 +26,15 @@ spring:
                 default:
                   type: java.util.HashMap
 
-  server:
-    port: 8083
+server:
+  port: 8083
 
-  user:
-    service:
-      url: https://localhost:8083
+user:
+  service:
+    url: https://localhost:8083
 
-  management:
-    endpoints:
-      web:
-        exposure:
-          include: health, info
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info

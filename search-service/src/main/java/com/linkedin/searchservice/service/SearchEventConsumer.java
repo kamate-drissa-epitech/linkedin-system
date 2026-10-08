@@ -26,6 +26,8 @@ public class SearchEventConsumer {
     public void consumeUserCreated(
             @Payload Map<String, Object> payload
             ) {
+        log.info("🔥 Search service received user.created: {}", payload);
+
         try {
             log.info("Indexing new user {}", payload.get("userId"));
             UserDocument userDocument = new UserDocument();

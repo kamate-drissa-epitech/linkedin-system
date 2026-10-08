@@ -146,7 +146,7 @@ public class UserService {
     public UserResponse uploadProfilePhoto(String userId, MultipartFile file) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
-        String photoUrl = S3.uploadFile(file, "/profile" + userId + "/avatar");
+        String photoUrl = s3Service.uploadFile(file, "/profile" + userId + "/avatar");
 
         user.setProfilePhotoUrl(photoUrl);
 

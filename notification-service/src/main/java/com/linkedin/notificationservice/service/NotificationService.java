@@ -17,6 +17,8 @@ public class NotificationService {
      */
     @KafkaListener(topics = "user.created")
     public void consumeUserCreated(@Payload Map<String, Object> payload) {
+        log.info("🔥 user.created EVENT RECEIVED: {}", payload);
+
         try {
             String userId = (String) payload.get("userId");
             String firstName = (String) payload.get("firstName");

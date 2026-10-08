@@ -64,13 +64,31 @@ public class AuthService {
 
         Map<String,Object> userCreatedEvent = new HashMap<>();
         userCreatedEvent.put("userId", userSaved.getId());
-        userCreatedEvent.put("userName", userSaved.getFirstName());
-        userCreatedEvent.put("userLastName", userSaved.getLastName());
-        userCreatedEvent.put("userEmail", userSaved.getEmail());
-        userCreatedEvent.put("userHeadline", userSaved.getHeadline());
-        userCreatedEvent.put("userLocation", userSaved.getLocation());
+        userCreatedEvent.put("firstName", userSaved.getFirstName());
+        userCreatedEvent.put("lastName", userSaved.getLastName());
+        userCreatedEvent.put("email", userSaved.getEmail());
+        userCreatedEvent.put("headline", userSaved.getHeadline());
+        userCreatedEvent.put("location", userSaved.getLocation());
 
-        kafkaTemplate.send(USER_CREATED_TOPIC,userSaved.getId(), userCreatedEvent);
+        kafkaTemplate.send(
+                USER_CREATED_TOPIC,
+                userSaved.getId(),
+                userCreatedEvent
+        ).whenComplete((result, ex) -> {
+
+            if (ex != null) {
+                log.error("❌ Error publishing user.created", ex);
+                return;
+            }
+
+            log.info(
+                    "✅ user.created published: topic={}, partition={}, offset={}",
+                    result.getRecordMetadata().topic(),
+                    result.getRecordMetadata().partition(),
+                    result.getRecordMetadata().offset()
+            );
+        });
+//        kafkaTemplate.send(USER_CREATED_TOPIC,userSaved.getId(), userCreatedEvent);
 
         log.info("user.created event published  {}", userSaved.getId());
 

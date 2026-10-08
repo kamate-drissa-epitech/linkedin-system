@@ -41,25 +41,25 @@ public class UserController {
      * @return
      */
     @PutMapping("/userId/profile")
-    public ResponseEntity<UserResponse> updateUserProfile(@PathVariable String userId,@RequestHeader("X-User-Id") String requestingUserId, @ResponseBody UserResponse request) {
+    public ResponseEntity<UserResponse> updateUserProfile(@PathVariable String userId,@RequestHeader("X-User-Id") String requestingUserId, @RequestBody UserResponse request) {
         if (!userId.equals(requestingUserId)) {
             return  ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
         return ResponseEntity.ok(userService.updateUserProfile(userId, request));
     }
 
-    @PostMapping("/{userId/profile-photo")
+    @PostMapping("/{userId}/profile-photo")
     public ResponseEntity<UserResponse> uploadProfilePhoto(
-            @PathVariable User userId,
+            @PathVariable String userId,
             @RequestHeader("X-User-Id") String requestingUserId,
-            @RequestParam("file")MultipartFile file
+            @RequestParam("file") MultipartFile file
             ){
 
             if (!userId.equals(requestingUserId)) {
                 return ResponseEntity.status(403).build();
             }
 
-            ResponseEntity.ok(userService.updateUserProfile(userId, file));
+            return  ResponseEntity.ok(userService.uploadProfilePhoto(userId, file));
     }
 
     /**
@@ -68,7 +68,7 @@ public class UserController {
      * @param requestingUserId
      * @return
      */
-    @PostMapping("/{targetedUserId/connect}")
+    @PostMapping("/{targetedUserId}/connect")
     public ResponseEntity<String> sendConnection(@PathVariable String targetedUserId, @RequestHeader("X-User-Id") String requestingUserId) {
         return ResponseEntity.ok(userService.sendConnectionRequest(targetedUserId, requestingUserId));
     }
@@ -79,7 +79,7 @@ public class UserController {
         return  ResponseEntity.ok(userService.acceptConnectionRequest(connectionId));
     }
 
-    @GetMapping("/{userId}/connections")
+    @GetMapping("/{userId}/getConnections")
     public ResponseEntity<List<UserResponse>> getConnections(@PathVariable String userId, @RequestHeader("X-User-Id") String requestingUserId) {
         return  ResponseEntity.ok(userService.getConnections(userId));
     }
