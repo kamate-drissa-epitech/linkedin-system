@@ -13,7 +13,7 @@ spring:
       group-id: feed-service-group
       auto-offset-reset: earliest
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JacksonJsonDeserializer
       properties:
         spring:
           json:
@@ -31,7 +31,10 @@ server:
 
 user:
   service:
-    url: https://localhost:8083
+    url: https://localhost:8086
+
+fee:
+  max-size: 3
 
 management:
   endpoints:

@@ -14,7 +14,6 @@ import java.util.List;
 public class FeedService {
     private final RedisTemplate<String, Object> redisTemplate;
     private static final String FEED_KEY_PREFIX = "feed:";
-    private final FeedService feedService;
 
     /**
      *
@@ -51,7 +50,7 @@ public class FeedService {
      * Clear feed cache for user
      * @param userId
      */
-    public void cleaFeed(String userId){
+    public void clearFeed(String userId){
         String key = FEED_KEY_PREFIX + userId;
         redisTemplate.delete(key);
         log.info("Deleted feed cache for user {} ", userId);
